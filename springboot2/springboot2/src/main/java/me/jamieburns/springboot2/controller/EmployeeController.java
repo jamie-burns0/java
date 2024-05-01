@@ -1,5 +1,7 @@
 package me.jamieburns.springboot2.controller;
 
+import static me.jamieburns.springboot2.model.EmployeeSupport.updatEmployee;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import me.jamieburns.springboot2.model.Employee;
 import me.jamieburns.springboot2.model.EmployeeRepository;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -38,17 +41,14 @@ public class EmployeeController {
     }
     
     @PutMapping("/employees/{id}")
-    Employee replaceEmployee( @RequestBody Employee newEmployee, @PathVariable Long id ) {
-        return
+    Employee replaceEmployee( @RequestBody Employee employeeData, @PathVariable Long id ) {
+        
+        var employee = 
             repository.findById( id )
-                      .map( employee -> {
-                          employee.name( newEmployee.name() );
-                          employee.role( newEmployee.role() );
-                          return repository.save( employee );
-                      } )
-                      .orElseGet( () -> {
-                          return repository.save( new Employee( newEmployee.name(), newEmployee.role() ) );
-                      } );
+                      .map( existingEmployee -> updatEmployee( existingEmployee , employeeData ) )
+                      .orElse( Employee.of( employeeData ) );
+
+        return repository.save( employee );
     }
 
     @DeleteMapping("/employees/{id}")

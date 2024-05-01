@@ -36,4 +36,14 @@ public class Employee {
     public String toString() {
         return "Employee{id=%d, name='%s', role='%s'}".formatted( id, name, role );
     }
+
+    public static final Employee of( String name, String role )
+    {
+        return EmployeeSupport.newEmployee( name, role );
+    }
+
+    public static final Employee of( Employee employeeData )
+    {
+        return EmployeeSupport.newEmployee( employeeData.name(), employeeData.role() );
+    }
 }
