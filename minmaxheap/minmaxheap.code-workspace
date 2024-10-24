@@ -1,0 +1,12 @@
+{
+	"folders": [
+		{
+			"path": "lib"
+		}
+	],
+	"settings": {
+		"java.project.explorer.showNonJavaResources": true,
+		"java.dependency.packagePresentation": "flat"
+		"java.configuration.updateBuildConfiguration": "disabled"
+	}
+}
